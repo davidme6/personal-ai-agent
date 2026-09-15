@@ -1,0 +1,27 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db
+.pytest_cache/
+
+# Private runtime data created by the initializer
+.personal/
+.device/
+
+# Credentials and encrypted-vault working files
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.kdbx
+local-secret/
+*password*
+*secret*
+
+# Temporary and generated files
+*.tmp
+*.bak
+dist/
+build/
