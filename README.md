@@ -6,7 +6,7 @@
 
 **A local-first, file-based framework for an AI assistant that can remember, switch contexts, and continue across sessions without publishing your private life.**
 
-Most AI chats forget the structure around your work. Personal AI Agent gives any local-file-capable assistant a small operating system: one entry protocol, durable memory, project routing, session handoffs, privacy boundaries, and multi-device rules.
+Most AI chats forget the structure around your work. Personal AI Agent gives any local-file-capable assistant a small operating system: one entry protocol, durable memory, optional local semantic recall, project routing, session handoffs, privacy boundaries, and multi-device rules.
 
 > The repository contains the reusable framework. Your profile, projects, conversations, knowledge base, credentials, and device paths are created locally and ignored by Git.
 
@@ -26,6 +26,7 @@ This project makes those boundaries explicit and inspectable.
 
 - **One entry point** — every assistant starts from `AGENTS.md` and the current-state file.
 - **Layered memory** — current state, session history, and stable long-term decisions have different homes.
+- **Optional semantic recall** — a local embedding index finds relevant history while the underlying files remain authoritative.
 - **Project routing** — a registry sends each request to the right project entry and evidence.
 - **Session continuity** — start/end workflows preserve the stopping point without treating chat history as the database.
 - **Local-first privacy** — runtime data and device secrets are excluded from Git by default.
@@ -45,6 +46,8 @@ flowchart TD
     R --> E[Project entry and evidence]
     W --> M[Private memory and logs]
     E --> M
+    M --> I[Optional local semantic index]
+    I --> A
     C[Public framework in Git] -. templates .-> P
     D[Private local data] -. excluded from Git .-> M
 ```
@@ -66,6 +69,18 @@ Then open this folder in your AI tool and say:
 
 The initializer creates only missing files. It will not overwrite an existing profile, state, or registry.
 
+### Optional local semantic recall
+
+Install the optional dependency, build a local index of `.personal/`, and query it:
+
+```bash
+python -m pip install -r requirements-memory.txt
+python tools/memory_index.py
+python tools/memory_recall.py "What did we decide about the launch?"
+```
+
+The first run may download the embedding model. The scripts process your content locally and store the rebuildable SQLite index in Git-ignored `.local/`. The database includes private text excerpts, so do not publish or sync it without appropriate encryption. See [Local semantic memory](docs/semantic-memory.md).
+
 ## Public framework vs. private workspace
 
 | Public and versioned | Local/private by default |
@@ -74,6 +89,7 @@ The initializer creates only missing files. It will not overwrite an existing pr
 | templates and validation tools | `.personal/current-state.md` |
 | documentation and community files | `.personal/projects/`, knowledge, logs |
 | example registry schema | `.device/`, credentials, absolute paths |
+| semantic-memory tools | `.local/memory_index.db` cache |
 
 This separation is the core design. A private GitHub repository is still a repository upload; sensitive material should not enter Git history in the first place.
 
@@ -81,7 +97,7 @@ This separation is the core design. A private GitHub repository is still a repos
 
 1. The assistant reads the entry protocol and current state.
 2. It finds the active project through `.personal/project-registry.json`.
-3. It reads only the material needed for the current request.
+3. For history-dependent questions, it can recall likely sources from the optional local semantic index and then verify the source files.
 4. It records work in the correct project/log location.
 5. At the end, it updates the current state and creates a dated handoff.
 
@@ -108,12 +124,13 @@ personal-ai-agent/
 ├── tests/                    # behavior tests
 ├── docs/                     # architecture, devices, FAQ
 ├── .personal/                # generated private data (Git-ignored)
-└── .device/                  # generated machine-local data (Git-ignored)
+├── .device/                  # generated machine-local data (Git-ignored)
+└── .local/                   # optional semantic index cache (Git-ignored)
 ```
 
 ## Project status
 
-This is the first public template release. The file protocol and safety boundaries are usable; integrations with specific AI products remain intentionally thin so the framework stays portable.
+The file protocol, safety boundaries, and optional local semantic-memory workflow are usable. Integrations with specific AI products remain intentionally thin so the framework stays portable.
 
 ## Roadmap
 
@@ -133,6 +150,19 @@ Issues and pull requests are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.
 
 ## Support the project
 
-If this framework saves you time, you can support its maintenance through the options in [SUPPORT.md](SUPPORT.md). Support is voluntary and does not change access, support priority, or licensing.
+If this framework saves you time, you can support its maintenance below. Support is voluntary and does not change access, support priority, or licensing.
+
+<table>
+  <tr>
+    <th>PayPal</th>
+    <th>Alipay / 支付宝</th>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://www.paypal.com/qrcodes/p2pqrc/CQYXPCYKSA6NC"><img src="docs/assets/paypal-support.jpg" alt="PayPal support QR code for sheng yichao" width="260" /></a><br /><code>shengyichaogg@gmail.com</code></td>
+    <td align="center"><a href="docs/assets/alipay-support.jpg"><img src="docs/assets/alipay-support.jpg" alt="Alipay support QR code" width="260" /></a></td>
+  </tr>
+</table>
+
+Please verify the recipient before paying. See [SUPPORT.md](SUPPORT.md) for details and other ways to help.
 
 Related project: [AI Learning Method](https://github.com/davidme6/ai-learning-method).

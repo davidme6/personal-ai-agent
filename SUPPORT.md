@@ -8,6 +8,10 @@ Personal AI Agent is AGPL-3.0-only licensed and free to use under that license. 
 
 PayPal account: **shengyichaogg@gmail.com**
 
+<a href="https://www.paypal.com/qrcodes/p2pqrc/CQYXPCYKSA6NC"><img src="docs/assets/paypal-support.jpg" alt="PayPal support QR code for sheng yichao" width="320" /></a>
+
+[Open the PayPal payment page](https://www.paypal.com/qrcodes/p2pqrc/CQYXPCYKSA6NC) / [打开 PayPal 付款页面](https://www.paypal.com/qrcodes/p2pqrc/CQYXPCYKSA6NC)
+
 In PayPal, choose Send, enter the account above, and verify the recipient before confirming. Availability, fees, and supported currencies depend on your region and account.
 
 在 PayPal 中选择转账，输入以上账号，确认收款人后再支付。可用地区、币种和费用以 PayPal 页面为准。

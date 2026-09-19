@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0 — 2026-09-19
+
+- Added optional local semantic indexing and recall for the Git-ignored private workspace.
+- Kept source files authoritative and the SQLite index disposable, local, and excluded from Git.
+- Added tests, bilingual setup/privacy guidance, and visible PayPal/Alipay support options.
+
 ## 0.1.0 — 2026-09-15
 
 - First public-template candidate.

@@ -3,10 +3,12 @@ __pycache__/
 .DS_Store
 Thumbs.db
 .pytest_cache/
+.venv/
 
 # Private runtime data created by the initializer
 .personal/
 .device/
+.local/
 
 # Credentials and encrypted-vault working files
 .env

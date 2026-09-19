@@ -21,3 +21,9 @@ The device plane lives under `.device/`. It stores paths, runtime adapters, and 
 ## Retrieval path
 
 The agent starts with profile and current state, selects a project through the registry, opens the project entry, and then loads evidence on demand. This keeps context small without discarding history.
+
+## Optional semantic-memory cache
+
+For questions that depend on older decisions, `tools/memory_index.py` can embed the Git-ignored `.personal/` text files into `.local/memory_index.db`. `tools/memory_recall.py` returns ranked excerpts with their source paths. The agent must reopen those source files before treating a recalled claim as current or verified.
+
+The index is a local cache, not another memory authority. It can be deleted and rebuilt from the private files on each device. Because the database contains plaintext excerpts as well as vectors, it is excluded from Git and should be protected like the source material.

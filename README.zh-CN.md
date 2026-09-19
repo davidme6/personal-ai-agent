@@ -8,7 +8,7 @@
 
 很多 AI 对话的问题不是模型不够强，而是工作上下文被困在窗口里：新会话忘记进度，多台设备路径不一致，不同 Agent 各写一套状态，代码与个人资料又容易混到一起。
 
-这个项目提供一套小而完整的“运行协议”：统一入口、分层记忆、项目路由、会话交接、隐私边界和多设备规则。
+这个项目提供一套小而完整的“运行协议”：统一入口、分层记忆、可选的本地语义召回、项目路由、会话交接、隐私边界和多设备规则。
 
 > 公开仓库只包含可复用架构。你的个人画像、项目资料、聊天、知识库、凭据和本机路径由初始化工具在本地生成，并默认排除在 Git 之外。
 
@@ -24,6 +24,7 @@
 
 - **统一入口**：每个 Agent 先读 `AGENTS.md` 和当前状态。
 - **分层记忆**：当前状态、会话历史、稳定长期决定分开保存。
+- **可选语义召回**：本地向量索引帮助找到相关历史，原始文件仍是权威来源。
 - **项目路由**：通过登记表找到正确项目入口和证据。
 - **跨窗口连续**：用启动/结束工作流保留精确停点。
 - **本地隐私**：个人数据、本机信息和密钥默认不进 Git。
@@ -43,6 +44,8 @@ flowchart TD
     R --> E[项目入口与证据]
     W --> M[私人记忆与日志]
     E --> M
+    M --> I[可选本地语义索引]
+    I --> A
     C[Git 中的公开框架] -. 提供模板 .-> P
     D[本地私人数据] -. 默认不进 Git .-> M
 ```
@@ -64,6 +67,18 @@ python tools/check_workspace.py
 
 初始化工具只创建缺失文件，不覆盖已经存在的个人画像、状态或项目登记。
 
+### 可选：本地语义记忆检索
+
+安装可选依赖，给 `.personal/` 建立本地索引，然后按问题召回相关片段：
+
+```bash
+python -m pip install -r requirements-memory.txt
+python tools/memory_index.py
+python tools/memory_recall.py "我们之前对发布做了什么决定？"
+```
+
+第一次运行可能下载嵌入模型。脚本在本机处理内容，将可重建的 SQLite 索引存入 Git 忽略的 `.local/`。数据库含私人原文片段，不能直接公开，也不应在未加密的情况下同步。详见[本地语义记忆](docs/semantic-memory.md)。
+
 ## 公开框架和私人工作区
 
 | 公开、可版本管理 | 默认只在本地 |
@@ -72,6 +87,7 @@ python tools/check_workspace.py
 | 模板、检查工具、公开文档 | `.personal/current-state.md` |
 | 示例登记结构 | `.personal/projects/`、知识、日志 |
 | 社区与贡献文件 | `.device/`、密钥、本机绝对路径 |
+| 语义记忆工具 | `.local/memory_index.db` 缓存 |
 
 这是整个项目最重要的边界。私有 GitHub 仓库也属于上传，敏感资料最好从一开始就不进入 Git 历史。
 
@@ -79,7 +95,7 @@ python tools/check_workspace.py
 
 1. Agent 读取统一入口和当前状态。
 2. 通过 `.personal/project-registry.json` 找到当前项目。
-3. 只读取本任务需要的材料。
+3. 遇到依赖历史的问题，可先从本地语义索引召回可能相关的来源，再回读原文件核实。
 4. 把产物和记录写入对应位置。
 5. 收尾时更新当前状态并生成带日期的交接。
 
@@ -106,12 +122,13 @@ personal-ai-agent/
 ├── tests/                    # 行为测试
 ├── docs/                     # 架构、设备与常见问题
 ├── .personal/                # 初始化后生成，Git忽略
-└── .device/                  # 每台设备独立生成，Git忽略
+├── .device/                  # 每台设备独立生成，Git忽略
+└── .local/                   # 可选语义索引缓存，Git忽略
 ```
 
 ## 当前阶段与路线图
 
-这是第一版公开模板，文件协议和安全边界已经可用。后续计划增加更多项目模板、加密备份示例、不同本地 AI 工具的接入方式、登记表校验和连续性端到端测试。
+文件协议、安全边界和可选的本地语义记忆流程均可使用。后续计划增加更多项目模板、加密备份示例、不同本地 AI 工具的接入方式、登记表校验和连续性端到端测试。
 
 ## 参与贡献
 
@@ -123,6 +140,19 @@ personal-ai-agent/
 
 ## 支持项目
 
-如果这个框架帮你节省了时间，可在 [SUPPORT.md](SUPPORT.md) 中自愿支持维护。支持与否不影响功能、支持优先级或开源授权。
+如果这个框架帮你节省了时间，可以通过下方入口自愿支持维护。支持与否不影响功能、支持优先级或开源授权。
+
+<table>
+  <tr>
+    <th>PayPal</th>
+    <th>支付宝</th>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://www.paypal.com/qrcodes/p2pqrc/CQYXPCYKSA6NC"><img src="docs/assets/paypal-support.jpg" alt="sheng yichao 的 PayPal 收款二维码" width="260" /></a><br /><code>shengyichaogg@gmail.com</code></td>
+    <td align="center"><a href="docs/assets/alipay-support.jpg"><img src="docs/assets/alipay-support.jpg" alt="支付宝支持二维码" width="260" /></a></td>
+  </tr>
+</table>
+
+付款前请核对收款人。完整说明和其他支持方式见 [SUPPORT.md](SUPPORT.md)。
 
 相关项目：[AI Learning Method](https://github.com/davidme6/ai-learning-method)。
