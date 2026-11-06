@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="960" height="420" role="img" aria-labelledby="t d">
+  <title id="t">每天自动跑的任务</title>
+  <desc id="d">每 10 分钟记录变更留痕；每天 09:00 和 18:00 归档刷新；18:30 可选同步私有仓；18:40 / 18:45 可选同步飞书主资料库和 Google Drive 等云盘。</desc>
+  <style>
+    text { font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", sans-serif; fill: #0F172A; }
+    .h1 { font-size: 22px; font-weight: 700; }
+    .sub { font-size: 14px; fill: #475569; }
+    .time { font-size: 15px; font-weight: 700; }
+    .b { font-size: 16px; font-weight: 700; }
+    .code { font-family: ui-monospace, "Cascadia Code", Consolas, Menlo, monospace; font-size: 12px; fill: #475569; }
+    .li { font-size: 13px; fill: #334155; }
+    .tag { font-size: 11px; font-weight: 700; }
+  </style>
+  <rect x="1" y="1" width="958" height="418" rx="16" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="40" y="52" class="h1">每天自动跑：不用记得归档</text>
+  <text x="40" y="80" class="sub">装一次定时任务（Windows 任务计划程序 / macOS、Linux 的 cron）；Windows 上关机错过的开机补跑</text>
+
+  <line x1="60" y1="128" x2="900" y2="128" stroke="#CBD5E1" stroke-width="3"/>
+  <circle cx="140" cy="128" r="8" fill="#0EA5E9"/>
+  <circle cx="365" cy="128" r="8" fill="#2563EB"/>
+  <circle cx="590" cy="128" r="8" fill="#10B981"/>
+  <circle cx="815" cy="128" r="8" fill="#8B5CF6"/>
+  <text x="140" y="112" class="time" text-anchor="middle">每 10 分钟</text>
+  <text x="365" y="112" class="time" text-anchor="middle">09:00 / 18:00</text>
+  <text x="590" y="112" class="time" text-anchor="middle">18:30</text>
+  <text x="815" y="112" class="time" text-anchor="middle">18:40 / 18:45</text>
+
+  <g>
+    <rect x="40" y="152" width="200" height="236" rx="12" fill="#FFFFFF" stroke="#7DD3FC"/>
+    <rect x="40" y="152" width="200" height="6" rx="3" fill="#0EA5E9"/>
+    <text x="58" y="188" class="b">变更留痕</text>
+    <text x="58" y="208" class="code">trace_changes.py</text>
+    <text x="58" y="240" class="li">· 哪个文件何时增删改</text>
+    <text x="58" y="264" class="li">· 只记内容真变了的</text>
+    <text x="58" y="288" class="li">· 隐私目录只记目录名</text>
+    <text x="58" y="312" class="li">· 有改动没日志会标出</text>
+  </g>
+  <g>
+    <rect x="265" y="152" width="200" height="236" rx="12" fill="#FFFFFF" stroke="#93C5FD"/>
+    <rect x="265" y="152" width="200" height="6" rx="3" fill="#2563EB"/>
+    <text x="283" y="188" class="b">归档刷新</text>
+    <text x="283" y="208" class="code">refresh.py</text>
+    <text x="283" y="240" class="li">· 导出所有 AI 逐字对话</text>
+    <text x="283" y="264" class="li">· 用户发的图片一并保存</text>
+    <text x="283" y="288" class="li">· 更新本地语义索引</text>
+    <text x="283" y="312" class="li">· 生成对话总索引</text>
+    <text x="283" y="336" class="li">· 列出过期的记忆段落</text>
+  </g>
+  <g>
+    <rect x="490" y="152" width="200" height="236" rx="12" fill="#FFFFFF" stroke="#6EE7B7"/>
+    <rect x="490" y="152" width="200" height="6" rx="3" fill="#10B981"/>
+    <text x="508" y="188" class="b">同步私有仓</text>
+    <text x="508" y="208" class="code">auto_sync.py</text>
+    <text x="508" y="240" class="li">· 先拉后推，三方合并</text>
+    <text x="508" y="264" class="li">· 提交前查密钥和隐私</text>
+    <text x="508" y="288" class="li">· 推送后回读核对</text>
+    <text x="508" y="312" class="li">· 失败只通知，不硬推</text>
+    <rect x="508" y="350" width="44" height="20" rx="10" fill="#D1FAE5"/>
+    <text x="530" y="364" class="tag" text-anchor="middle" style="fill:#047857">可选</text>
+  </g>
+  <g>
+    <rect x="715" y="152" width="200" height="236" rx="12" fill="#FFFFFF" stroke="#C4B5FD"/>
+    <rect x="715" y="152" width="200" height="6" rx="3" fill="#8B5CF6"/>
+    <text x="733" y="188" class="b">资料库同步</text>
+    <text x="733" y="208" class="code">feishu_sync / cloud_sync</text>
+    <text x="733" y="240" class="li">· 飞书主库 · Drive 副仓</text>
+    <text x="733" y="264" class="li">· 先比差异再动手</text>
+    <text x="733" y="288" class="li">· 两边都改：两份都留</text>
+    <text x="733" y="312" class="li">· 隐私目录永不上传</text>
+    <rect x="733" y="350" width="44" height="20" rx="10" fill="#EDE9FE"/>
+    <text x="755" y="364" class="tag" text-anchor="middle" style="fill:#6D28D9">可选</text>
+  </g>
+</svg>

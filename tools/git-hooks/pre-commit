@@ -1,0 +1,20 @@
+#!/bin/sh
+# pre-commit：① 门禁（tools/workflow_gate.py --pre-commit）② 上传检查（tools/upload_check.py --staged）。
+# 启用：python tools/install_git_hooks.py
+# 找不到 Python 3.9+ 时拦截提交，不静默放行。
+PY=""
+for candidate in "$AGENT_PYTHON" python3 python py; do
+  [ -n "$candidate" ] || continue
+  if "$candidate" -c "import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)" >/dev/null 2>&1; then
+    PY="$candidate"
+    break
+  fi
+done
+if [ -z "$PY" ]; then
+  echo "[pre-commit] 找不到 Python 3.9+，没法做提交前检查，已中止提交。" >&2
+  exit 1
+fi
+echo "[pre-commit] 门禁检查..."
+"$PY" tools/workflow_gate.py --pre-commit || exit 1
+echo "[pre-commit] 上传检查（已暂存的内容）..."
+"$PY" tools/upload_check.py --staged || exit 1

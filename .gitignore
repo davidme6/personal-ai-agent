@@ -1,0 +1,32 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db
+.pytest_cache/
+.venv/
+
+# Private runtime data created by the initializer.
+# In your own PRIVATE repository, `python tools/init_workspace.py --private-repo <url>`
+# writes .personal/.gitignore, which re-includes text state but keeps private/ and files/ out.
+.personal/*
+!.personal/.gitignore
+.device/
+.local/
+
+# Credentials and encrypted-vault working files
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.kdbx
+local-secret/
+*password*
+*secret*
+
+# Temporary and generated files
+*.tmp
+*.bak
+dist/
+build/

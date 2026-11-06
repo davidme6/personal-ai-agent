@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 380" width="960" height="380" role="img" aria-labelledby="t d">
+  <title id="t">像 GitHub 一样的三方比较同步</title>
+  <desc id="d">拿上次同步的版本分别和本机、云端比较：只本机改了就推，只云端改了就拉，两边都改了算冲突两份都留，都没改不动。</desc>
+  <style>
+    text { font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", sans-serif; fill: #0F172A; }
+    .h1 { font-size: 22px; font-weight: 700; }
+    .sub { font-size: 14px; fill: #475569; }
+    .b { font-size: 15px; font-weight: 700; }
+    .s { font-size: 13px; fill: #334155; }
+    .line { stroke: #94A3B8; stroke-width: 1.5; fill: none; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="958" height="378" rx="16" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="40" y="52" class="h1">同步像 GitHub：先比差异，再动手</text>
+  <text x="40" y="80" class="sub">不是“以本机为准”或“以云端为准”的简单覆盖，而是看每个文件到底哪边改了</text>
+
+  <rect x="40" y="112" width="210" height="56" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="58" y="136" class="b">上次同步的版本</text>
+  <text x="58" y="156" class="s">基线（Git 提交 / rclone 列表）</text>
+  <rect x="40" y="184" width="210" height="56" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="58" y="208" class="b">本机现在</text>
+  <text x="58" y="228" class="s">你这台电脑上的文件</text>
+  <rect x="40" y="256" width="210" height="56" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="58" y="280" class="b">云端现在</text>
+  <text x="58" y="300" class="s">私有仓 / 云盘里的文件</text>
+
+  <path d="M250,140 C290,140 290,212 318,212" class="line" marker-end="url(#a)"/>
+  <path d="M250,212 H318" class="line" marker-end="url(#a)"/>
+  <path d="M250,284 C290,284 290,212 318,212" class="line" marker-end="url(#a)"/>
+  <rect x="322" y="180" width="150" height="64" rx="32" fill="#1E40AF"/>
+  <text x="397" y="218" class="b" text-anchor="middle" style="fill:#FFFFFF">三方比较</text>
+  <path d="M472,212 H500 M500,136 V300 M500,136 H530 M500,190 H530 M500,246 H530 M500,300 H530" class="line"/>
+
+  <rect x="534" y="114" width="386" height="44" rx="10" fill="#ECFDF5" stroke="#34D399"/>
+  <text x="552" y="141" class="b">只有本机改了</text>
+  <text x="700" y="141" class="s">→ 推到云端</text>
+  <rect x="534" y="168" width="386" height="44" rx="10" fill="#EFF6FF" stroke="#93C5FD"/>
+  <text x="552" y="195" class="b">只有云端改了</text>
+  <text x="700" y="195" class="s">→ 拉到本机（先备份旧的）</text>
+  <rect x="534" y="224" width="386" height="44" rx="10" fill="#FEF3C7" stroke="#F59E0B"/>
+  <text x="552" y="251" class="b">两边都改了</text>
+  <text x="700" y="251" class="s">→ 冲突：两份都留，交给你定</text>
+  <rect x="534" y="278" width="386" height="44" rx="10" fill="#F1F5F9" stroke="#CBD5E1"/>
+  <text x="552" y="305" class="b">都没改</text>
+  <text x="700" y="305" class="s">→ 不动</text>
+
+  <text x="40" y="354" class="s">另外：删除先核实再列给你；覆盖前先备份；脚本报了冲突，AI 必须停下来原样告诉你，不许绕开脚本手动覆盖。</text>
+</svg>

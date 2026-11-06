@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "projects": [
+    {
+      "id": "example-project",
+      "aliases": ["example", "demo"],
+      "entry": ".personal/projects/example-project/ENTRY.md",
+      "state": ".personal/projects/example-project/STATE.md"
+    }
+  ]
+}

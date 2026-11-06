@@ -1,0 +1,20 @@
+#!/bin/sh
+# pre-push：只许推到 .personal/agent.json 里登记的私有仓（private_remote）。
+# git 传入：$1=远端名  $2=远端地址。地址比对由 tools/upload_check.py 读设置完成，这里不写死任何仓库。
+# 启用：python tools/install_git_hooks.py
+PY=""
+for candidate in "$AGENT_PYTHON" python3 python py; do
+  [ -n "$candidate" ] || continue
+  if "$candidate" -c "import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)" >/dev/null 2>&1; then
+    PY="$candidate"
+    break
+  fi
+done
+if [ -z "$PY" ]; then
+  echo "[pre-push] 找不到 Python 3.9+，没法核对推送地址，已中止推送。" >&2
+  exit 1
+fi
+"$PY" tools/upload_check.py --check-remote "$2" || {
+  echo "[pre-push] 已拦截本次推送。" >&2
+  exit 1
+}

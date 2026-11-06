@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "private_remote": "",
+  "local_only": [".personal/private/", ".device/", ".local/"],
+  "require_task_card": false,
+  "sync_exclude": {
+    "credentials": true,
+    "media": false,
+    "patterns": []
+  },
+  "archive": {
+    "sources": ["claude", "codex", "workbuddy"],
+    "all_projects": false,
+    "local_only_projects": []
+  },
+  "setup": {
+    "completed": false,
+    "answered": [],
+    "backup": "",
+    "schedule": "",
+    "sync_credentials": ""
+  },
+  "skills": {
+    "source": "skill",
+    "skills": "all",
+    "exclude": [],
+    "targets": {}
+  },
+  "auto_sync_paths": [".personal/logs", ".personal/memory", ".personal/handoff", ".personal/current-state.md", ".personal/feishu-map.json"],
+  "schedule": {
+    "refresh_times": ["09:00", "18:00"],
+    "trace_minutes": 10,
+    "auto_sync_time": "18:30",
+    "feishu_sync_time": "18:40",
+    "cloud_sync_time": "18:45"
+  },
+  "feishu": {
+    "enabled": false,
+    "cli": "lark-cli",
+    "profile": "",
+    "folder_token": "",
+    "local_path": ".personal/files",
+    "auto_sync": false
+  },
+  "cloud": {
+    "remote": "",
+    "local_path": ".personal/inbox",
+    "max_delete_percent": 10
+  }
+}
